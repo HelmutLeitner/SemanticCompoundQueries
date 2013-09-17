@@ -75,16 +75,11 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 			$printRequests = self::mergeSMWPrintRequests( $printRequests, $next_result->getPrintRequests() );
 		}
 
-//HL
 		// Sort results so that they'll show up by page name
                 $unsorted=$other_params['unsorted'];
                 if(strcmp($unsorted,"on")) {
  		  uasort( $results, array( 'SCQQueryProcessor', 'compareQueryResults' ) );
-                  wfErrorLog( "SCQ_QueryProafter sorting...\n", '/tmp/swm_debug.log' );
                 }
-// array_reverse($results);
-// array_reverse($printRequests);
-wfErrorLog( "SCQ_QueryProafter unsorted=".$unsorted.".\n", '/tmp/swm_debug.log' );
 
 		$query_result = new SCQQueryResult( $printRequests, new SMWQuery(), $results, smwfGetStore() );
 
