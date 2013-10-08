@@ -33,7 +33,7 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 		if ( !$smwgQEnabled ) {
 			return smwfEncodeMessages( array( wfMsgForContent( 'smw_iq_disabled' ) ) );
 		}
-
+# hlLog("doCompoundQuery start");
 		$smwgIQRunningNumber++;
 
 		$params = func_get_args();
@@ -76,7 +76,7 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 		}
 
 		// Sort results so that they'll show up by page name
-                $unsorted=$other_params['unsorted'];
+                $unsorted=isset($other_params['unsorted']) ? $other_params['unsorted'] : NULL;
                 if(strcmp($unsorted,"on")) {
  		  uasort( $results, array( 'SCQQueryProcessor', 'compareQueryResults' ) );
                 }
@@ -88,11 +88,17 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 			$other_params = parent::getProcessedParams( $other_params, $printRequests );
 		}
 
-		return self::getResultFromQueryResult(
+# hlLog("doCompoundQuery pre return");
+
+		$ret=self::getResultFromQueryResult(
 			$query_result,
 			$other_params,
 			SMW_OUTPUT_WIKI
 		);
+
+# hlLog("doCompundQuery return after getResultFromQueryResult");
+
+                return $ret;
 	}
 
 	/**
@@ -254,9 +260,11 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 		} else {
 			$format = self::getResultFormat( $params );
 		}
-
+# hlLog("getResultFromQueryResult 1 format=".$format." context=".$context);
 		$printer = self::getResultPrinter( $format, $context, $res );
+# hlLog("getResultFromQueryResult 2");
 		$result = $printer->getResult( $res, $params, $outputmode );
+# hlLog("getResultFromQueryResult 3");
 
 		wfProfileOut( 'SCQQueryProcessor::getResultFromQueryResult' );
 

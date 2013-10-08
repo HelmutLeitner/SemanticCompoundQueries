@@ -18,6 +18,7 @@ class SCQQueryResult extends SMWQueryResult {
 	 * @param SMWQueryResult $new_result
 	 */
 	public function addResult( SMWQueryResult $newResult ) {
+# hlLog("SCQQueryResult start");
 		$existingPageNames = array();
 		
 		while ( $row = $this->getNext() ) {
@@ -40,6 +41,7 @@ class SCQQueryResult extends SMWQueryResult {
 		}
 		
 		reset( $this->m_content );
+# hlLog("SCQQueryResult end");
 	}
 	
 }
