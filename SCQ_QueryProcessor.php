@@ -58,6 +58,10 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 				}
 			}
 		}
+                global $gw_query_other_params;
+                $gw_query_other_params=$other_params;
+
+# hlDumpTitleVar("other_params",$other_params);
 
 		foreach ( $queryParams as $param ) {
 			$subQueryParams = self::getSubParams( $param );
@@ -89,6 +93,9 @@ class SCQQueryProcessor extends SMWQueryProcessor {
 		}
 
 # hlLog("doCompoundQuery pre return");
+
+                global $gw_query_params;
+                $gw_query_params=$other_params;
 
 		$ret=self::getResultFromQueryResult(
 			$query_result,
